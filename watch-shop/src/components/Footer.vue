@@ -33,7 +33,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2024 LUX WATCH. Все права защищены.</p>
+      <p>&copy; 2026 LUX WATCH. Все права защищены.</p>
       <div class="social">
         <a href="#">Вконтакте</a>
         <a href="#">Instagram</a>

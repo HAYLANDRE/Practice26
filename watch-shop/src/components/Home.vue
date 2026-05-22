@@ -1,3 +1,7 @@
+<script setup>
+defineEmits(['navigate'])
+</script>
+
 <template>
   <section class="home">
     <div class="hero">
@@ -8,7 +12,7 @@
           Смотреть каталог
         </button>
       </div>
-      <div class="hero-image">⌚</div>
+      <div class="hero-image">🕦</div>
     </div>
 
     <section class="features">
@@ -30,10 +34,6 @@
     </section>
   </section>
 </template>
-
-<script setup>
-defineEmits(['navigate'])
-</script>
 
 <style scoped>
 .home {

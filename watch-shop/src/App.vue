@@ -13,8 +13,39 @@ const cart = ref([])
 const user = ref(null)
 const showRegisterModal = ref(false)
 const formData = ref({ name: '', email: '', phone: '' })
+const errors = ref({ name: '', email: '', phone: '' })
 
 const cartCount = computed(() => cart.value.length)
+
+const validateForm = () => {
+  errors.value = { name: '', email: '', phone: '' }
+
+  const name = formData.value.name.trim()
+  const email = formData.value.email.trim()
+  const phone = formData.value.phone.trim()
+
+  if (!name) {
+    errors.value.name = 'Имя обязательно'
+  } else if (name.length < 2) {
+    errors.value.name = 'Имя должно быть минимум 2 символа'
+  } else if (name.length > 50) {
+    errors.value.name = 'Имя не должно быть больше 50 символов'
+  }
+
+  if (!email) {
+    errors.value.email = 'Email обязателен'
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.value.email = 'Некорректный email адрес'
+  }
+
+  if (!phone) {
+    errors.value.phone = 'Телефон обязателен'
+  } else if (!/^\d{10,}$/.test(phone.replace(/\D/g, ''))) {
+    errors.value.phone = 'Телефон должен содержать минимум 10 цифр'
+  }
+
+  return !errors.value.name && !errors.value.email && !errors.value.phone
+}
 
 const addToCart = (product) => {
   const existing = cart.value.find(item => item.id === product.id)
@@ -42,13 +73,18 @@ const registerUser = (userData) => {
 }
 
 const handleRegister = () => {
+  if (!validateForm()) {
+    return
+  }
+
   registerUser({
-    name: formData.value.name,
-    email: formData.value.email,
-    phone: formData.value.phone,
+    name: formData.value.name.trim(),
+    email: formData.value.email.trim(),
+    phone: formData.value.phone.trim(),
     registeredAt: new Date().toLocaleDateString('ru-RU')
   })
   formData.value = { name: '', email: '', phone: '' }
+  errors.value = { name: '', email: '', phone: '' }
 }
 
 const logout = () => {
@@ -98,10 +134,40 @@ const navigateTo = (page) => {
         <button class="close-btn" @click="showRegisterModal = false">✕</button>
         <h2>Регистрация</h2>
         <form @submit.prevent="handleRegister">
-          <input v-model="formData.name" type="text" placeholder="Ваше имя" required>
-          <input v-model="formData.email" type="email" placeholder="Email" required>
-          <input v-model="formData.phone" type="tel" placeholder="Телефон" required>
-          <button type="submit">Зарегистрироваться</button>
+          <div class="form-group">
+            <label>Ваше имя</label>
+            <input
+              v-model="formData.name"
+              type="text"
+              placeholder="Введите имя (минимум 2 символа)"
+              @blur="validateForm"
+            >
+            <span v-if="errors.name" class="error-text">{{ errors.name }}</span>
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              v-model="formData.email"
+              type="email"
+              placeholder="Введите корректный email"
+              @blur="validateForm"
+            >
+            <span v-if="errors.email" class="error-text">{{ errors.email }}</span>
+          </div>
+
+          <div class="form-group">
+            <label>Телефон</label>
+            <input
+              v-model="formData.phone"
+              type="tel"
+              placeholder="Введите номер телефона (10+ цифр)"
+              @blur="validateForm"
+            >
+            <span v-if="errors.phone" class="error-text">{{ errors.phone }}</span>
+          </div>
+
+          <button type="submit" class="submit-btn">Зарегистрироваться</button>
         </form>
       </div>
     </div>
@@ -150,9 +216,11 @@ body {
   border-radius: 16px;
   padding: 32px;
   width: 90%;
-  max-width: 400px;
+  max-width: 450px;
   color: white;
   position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .close-btn {
@@ -164,6 +232,11 @@ body {
   color: #ddd;
   font-size: 24px;
   cursor: pointer;
+  transition: 0.3s;
+}
+
+.close-btn:hover {
+  color: #d7b56d;
 }
 
 .modal h2 {
@@ -178,6 +251,18 @@ body {
   gap: 16px;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #d7b56d;
+  font-weight: 600;
+}
+
 .modal input {
   padding: 12px;
   border: 1px solid rgba(215, 181, 109, 0.3);
@@ -185,18 +270,27 @@ body {
   background: #0f0f12;
   color: white;
   font-size: 14px;
+  transition: 0.3s;
 }
 
 .modal input::placeholder {
-  color: #888;
+  color: #666;
 }
 
 .modal input:focus {
   outline: none;
   border-color: #d7b56d;
+  box-shadow: 0 0 0 2px rgba(215, 181, 109, 0.1);
 }
 
-.modal button[type="submit"] {
+.error-text {
+  font-size: 12px;
+  color: #ff6b6b;
+  font-weight: 600;
+  margin-top: -2px;
+}
+
+.submit-btn {
   padding: 12px;
   background: #d7b56d;
   color: black;
@@ -205,9 +299,16 @@ body {
   font-weight: 700;
   cursor: pointer;
   transition: 0.3s;
+  margin-top: 8px;
+  font-size: 15px;
 }
 
-.modal button[type="submit"]:hover {
+.submit-btn:hover {
   background: #e5c578;
+  transform: translateY(-2px);
+}
+
+.submit-btn:active {
+  transform: translateY(0);
 }
 </style>

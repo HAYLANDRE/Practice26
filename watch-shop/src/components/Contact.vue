@@ -7,11 +7,54 @@ const form = ref({
   message: ''
 })
 
+const errors = ref({
+  name: '',
+  email: '',
+  message: ''
+})
+
 const submitted = ref(false)
 
+const validateForm = () => {
+  errors.value = { name: '', email: '', message: '' }
+
+  const name = form.value.name.trim()
+  const email = form.value.email.trim()
+  const message = form.value.message.trim()
+
+  if (!name) {
+    errors.value.name = 'Имя обязательно'
+  } else if (name.length < 2) {
+    errors.value.name = 'Имя должно быть минимум 2 символа'
+  } else if (name.length > 50) {
+    errors.value.name = 'Имя не должно быть больше 50 символов'
+  }
+
+  if (!email) {
+    errors.value.email = 'Email обязателен'
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.value.email = 'Некорректный email адрес'
+  }
+
+  if (!message) {
+    errors.value.message = 'Сообщение обязательно'
+  } else if (message.length < 10) {
+    errors.value.message = 'Сообщение должно быть минимум 10 символов'
+  } else if (message.length > 500) {
+    errors.value.message = 'Сообщение не должно быть больше 500 символов'
+  }
+
+  return !errors.value.name && !errors.value.email && !errors.value.message
+}
+
 const handleSubmit = () => {
+  if (!validateForm()) {
+    return
+  }
+
   submitted.value = true
   form.value = { name: '', email: '', message: '' }
+  errors.value = { name: '', email: '', message: '' }
   setTimeout(() => {
     submitted.value = false
   }, 3000)
@@ -52,26 +95,38 @@ const handleSubmit = () => {
           ✓ Спасибо! Ваше сообщение отправлено. Мы свяжемся с вами в течение 24 часов.
         </div>
 
-        <input
-          v-model="form.name"
-          type="text"
-          placeholder="Ваше имя"
-          required
-        >
+        <div class="form-group">
+          <label>Ваше имя</label>
+          <input
+            v-model="form.name"
+            type="text"
+            placeholder="Введите ваше имя"
+            @blur="validateForm"
+          >
+          <span v-if="errors.name" class="error-text">{{ errors.name }}</span>
+        </div>
 
-        <input
-          v-model="form.email"
-          type="email"
-          placeholder="Email"
-          required
-        >
+        <div class="form-group">
+          <label>Email</label>
+          <input
+            v-model="form.email"
+            type="email"
+            placeholder="Введите ваш email"
+            @blur="validateForm"
+          >
+          <span v-if="errors.email" class="error-text">{{ errors.email }}</span>
+        </div>
 
-        <textarea
-          v-model="form.message"
-          placeholder="Ваше сообщение"
-          rows="6"
-          required
-        ></textarea>
+        <div class="form-group">
+          <label>Сообщение</label>
+          <textarea
+            v-model="form.message"
+            placeholder="Ваше сообщение (минимум 10 символов)"
+            rows="6"
+            @blur="validateForm"
+          ></textarea>
+          <span v-if="errors.message" class="error-text">{{ errors.message }}</span>
+        </div>
 
         <button type="submit">Отправить</button>
       </form>
@@ -148,6 +203,18 @@ const handleSubmit = () => {
   text-align: center;
 }
 
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 14px;
+  color: #d7b56d;
+  font-weight: 600;
+}
+
 .contact-form input,
 .contact-form textarea {
   background: #0f0f12;
@@ -157,6 +224,7 @@ const handleSubmit = () => {
   color: white;
   font-family: inherit;
   font-size: 14px;
+  transition: 0.3s;
 }
 
 .contact-form input::placeholder,
@@ -168,6 +236,14 @@ const handleSubmit = () => {
 .contact-form textarea:focus {
   outline: none;
   border-color: #d7b56d;
+  box-shadow: 0 0 0 2px rgba(215, 181, 109, 0.1);
+}
+
+.error-text {
+  font-size: 12px;
+  color: #ff6b6b;
+  font-weight: 600;
+  margin-top: -2px;
 }
 
 .contact-form button {
@@ -180,10 +256,16 @@ const handleSubmit = () => {
   cursor: pointer;
   transition: 0.3s;
   margin-top: 12px;
+  font-size: 15px;
 }
 
 .contact-form button:hover {
   background: #e5c578;
+  transform: translateY(-2px);
+}
+
+.contact-form button:active {
+  transform: translateY(0);
 }
 
 @media (max-width: 900px) {

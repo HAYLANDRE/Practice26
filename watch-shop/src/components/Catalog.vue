@@ -10,56 +10,56 @@ const watches = ref([
     title: 'Certina DS Action',
     description: 'Спортивные часы с надёжным корпусом из нержавеющей стали и механизмом Ronda Quartz. Водостойкость до 100м, идеальны для активного образа жизни.',
     price: 89900,
-    image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=900&auto=format&fit=crop'
+    image: 'https://ulan-ude.timebit.ru/upload/iblock/606/60636f9b38c2fc198d1509041b978db1.jpg'
   },
   {
     id: 2,
     title: 'Seiko Prospex',
     description: 'Классические часы с автоматическим механизмом и сапфировым стеклом. Корпус из полированной нержавеющей стали, водостойкость 200м. Элегантный дизайн для деловых встреч.',
     price: 124500,
-    image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=900&auto=format&fit=crop'
+    image: 'https://images.firstclasswatches.com/EC-ErCaQdydO4MO5fJ9zg5372YOf6HtH98i00VcFsgY/rs:fit:0:1000/bg:fffcfa/bG9jYWw6Ly8vaW1hZ2VzL3Byb2R1Y3RzL3Byb2R1Y3QxNjI3NDAtOTkxMl9jcm9wcGVkLnBuZw.jpg'
   },
   {
     id: 3,
     title: 'Tag Heuer Carrera',
     description: 'Хронограф с трехсчетчиком и функцией секундомера. Швейцарский механизм, корпус из титана, сапфировое стекло с антибликовым покрытием. Люминесцентные стрелки для видимости в темноте.',
     price: 156000,
-    image: 'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?q=80&w=900&auto=format&fit=crop'
+    image: 'https://chrono.ru/netcat_files/multifile/202/4799/CV2010.BA0794.jpg'
   },
   {
     id: 4,
     title: 'Omega Seamaster',
     description: 'Восстановленная классика с механическим движением Cal. 1120. Корпус из розового золота 18K, вечный циферблат. Гарантия подлинности с сертификатом производителя.',
     price: 285000,
-    image: 'https://images.unsplash.com/photo-1523293182986-7651a695b37f?q=80&w=900&auto=format&fit=crop'
+    image: 'https://chrono.ru/netcat_files/multifile/202/18779/210.30.42.20.01.001_.jpg'
   },
   {
     id: 5,
     title: 'Breitling Titanium Pro',
     description: 'Легкие и прочные часы из авиационного титана. Механизм хронограф с 12-часовой шкалой, водостойкость 300м. Идеальны для пилотов и экстремальных условий.',
     price: 187500,
-    image: 'https://images.unsplash.com/photo-1495856458515-0637185298c1?q=80&w=900&auto=format&fit=crop'
+    image: 'https://spb.kronostime.ru/upload/resize_cache/iblock/36b/v2mj67rpoqey2cqj881qvf6qcsqwo9e3/99999_446_1/E823106A1BDS1.jpg'
   },
   {
     id: 6,
     title: 'Rolex Day-Date',
     description: 'Роскошные часы с позолотой 18K и кожаным ремешком крокодила. День и дата на циферблате, механизм Perpetual, водостойкость 100м. Символ статуса и успеха.',
     price: 450000,
-    image: 'https://images.unsplash.com/photo-1505778276668-fc4ee3ce4808?q=80&w=900&auto=format&fit=crop'
+    image: 'https://www.swisschrono.ru/wa-data/public/shop/products/28/56/55628/images/80282/80282.970.png'
   },
   {
     id: 7,
     title: 'Tudor Black Bay',
     description: 'Дайверские часы с черным циферблатом и красной полоской на ободе. Механизм автоматический MT5602, корпус из нержавеющей стали, водостойкость 200м.',
     price: 198500,
-    image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=900&auto=format&fit=crop'
+    image: 'https://submarinashop.ru/assets/images/products/5557/large/79030n-tudor-black-bay-1.jpg'
   },
   {
     id: 8,
     title: 'IWC Pilot Watch',
     description: 'Часы пилота с эргономичным дизайном и крупными легко читаемыми цифрами. Швейцарский механизм, корпус из нержавеющей стали. Люминесцентные стрелки, водостойкость 60м.',
     price: 164000,
-    image: 'https://images.unsplash.com/photo-1522057070519-e21cc028cb29?q=80&w=900&auto=format&fit=crop'
+    image: 'https://www.swisschrono.ru/wa-data/public/shop/products/85/98/59885/images/93081/93081.970.jpg'
   }
 ])
 
@@ -142,9 +142,15 @@ import { computed } from 'vue'
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
+  transition: 0.3s;
 }
 
 .sort-controls select:hover {
+  border-color: #d7b56d;
+}
+
+.sort-controls select:focus {
+  outline: none;
   border-color: #d7b56d;
 }
 
