@@ -8,44 +8,58 @@ const watches = ref([
   {
     id: 1,
     title: 'Certina DS Action',
-    description: 'Спортивные часы с надёжным корпусом и строгим дизайном.',
+    description: 'Спортивные часы с надёжным корпусом из нержавеющей стали и механизмом Ronda Quartz. Водостойкость до 100м, идеальны для активного образа жизни.',
     price: 89900,
     image: 'https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=900&auto=format&fit=crop'
   },
   {
     id: 2,
-    title: 'Classic Automatic',
-    description: 'Классическая модель для делового образа.',
+    title: 'Seiko Prospex',
+    description: 'Классические часы с автоматическим механизмом и сапфировым стеклом. Корпус из полированной нержавеющей стали, водостойкость 200м. Элегантный дизайн для деловых встреч.',
     price: 124500,
     image: 'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?q=80&w=900&auto=format&fit=crop'
   },
   {
     id: 3,
-    title: 'Sport Chronograph',
-    description: 'Хронограф с выразительным циферблатом.',
+    title: 'Tag Heuer Carrera',
+    description: 'Хронограф с трехсчетчиком и функцией секундомера. Швейцарский механизм, корпус из титана, сапфировое стекло с антибликовым покрытием. Люминесцентные стрелки для видимости в темноте.',
     price: 156000,
     image: 'https://images.unsplash.com/photo-1548171915-e79a380a2a4b?q=80&w=900&auto=format&fit=crop'
   },
   {
     id: 4,
-    title: 'Vintage Heritage',
-    description: 'Восстановленная классика на механизме ETA.',
-    price: 95000,
+    title: 'Omega Seamaster',
+    description: 'Восстановленная классика с механическим движением Cal. 1120. Корпус из розового золота 18K, вечный циферблат. Гарантия подлинности с сертификатом производителя.',
+    price: 285000,
     image: 'https://images.unsplash.com/photo-1523293182986-7651a695b37f?q=80&w=900&auto=format&fit=crop'
   },
   {
     id: 5,
-    title: 'Titanium Pro',
-    description: 'Легкие и прочные часы из титана для активного образа жизни.',
+    title: 'Breitling Titanium Pro',
+    description: 'Легкие и прочные часы из авиационного титана. Механизм хронограф с 12-часовой шкалой, водостойкость 300м. Идеальны для пилотов и экстремальных условий.',
     price: 187500,
     image: 'https://images.unsplash.com/photo-1495856458515-0637185298c1?q=80&w=900&auto=format&fit=crop'
   },
   {
     id: 6,
-    title: 'Gold Elegant',
-    description: 'Роскошные часы с позолотой и кожаным ремешком.',
-    price: 234000,
+    title: 'Rolex Day-Date',
+    description: 'Роскошные часы с позолотой 18K и кожаным ремешком крокодила. День и дата на циферблате, механизм Perpetual, водостойкость 100м. Символ статуса и успеха.',
+    price: 450000,
     image: 'https://images.unsplash.com/photo-1505778276668-fc4ee3ce4808?q=80&w=900&auto=format&fit=crop'
+  },
+  {
+    id: 7,
+    title: 'Tudor Black Bay',
+    description: 'Дайверские часы с черным циферблатом и красной полоской на ободе. Механизм автоматический MT5602, корпус из нержавеющей стали, водостойкость 200м.',
+    price: 198500,
+    image: 'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?q=80&w=900&auto=format&fit=crop'
+  },
+  {
+    id: 8,
+    title: 'IWC Pilot Watch',
+    description: 'Часы пилота с эргономичным дизайном и крупными легко читаемыми цифрами. Швейцарский механизм, корпус из нержавеющей стали. Люминесцентные стрелки, водостойкость 60м.',
+    price: 164000,
+    image: 'https://images.unsplash.com/photo-1522057070519-e21cc028cb29?q=80&w=900&auto=format&fit=crop'
   }
 ])
 
