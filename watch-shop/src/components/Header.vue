@@ -39,10 +39,20 @@
         <span v-if="cartCount > 0" class="cart-badge">{{ cartCount }}</span>
       </div>
 
-      <div v-if="user" class="user-menu">
-        <span class="user-name">{{ user.name }}</span>
-        <button @click="$emit('logout')" class="logout-btn">Выход</button>
-      </div>
+     <div v-if="user" class="user-menu">
+  <span class="user-name">{{ user.name }}</span>
+
+  <button
+    @click="$emit('navigate', 'profile')"
+    class="profile-btn"
+  >
+    Личный кабинет
+  </button>
+
+  <button @click="$emit('logout')" class="logout-btn">
+    Выход
+  </button>
+</div>
       <button v-else @click="$emit('show-register')" class="login-btn">
         Вход/Регистр.
       </button>
@@ -61,6 +71,20 @@ defineEmits(['navigate', 'show-register', 'logout'])
 </script>
 
 <style scoped>
+.profile-btn {
+  background: none;
+  border: 1px solid #d7b56d;
+  color: #d7b56d;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.profile-btn:hover {
+  background: #d7b56d;
+  color: black;
+}
 .header {
   height: 70px;
   padding: 0 40px;

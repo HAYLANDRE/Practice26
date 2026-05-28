@@ -6,7 +6,7 @@ const props = defineProps({
   user: Object
 })
 
-const emit = defineEmits(['remove', 'update-quantity', 'show-register'])
+const emit = defineEmits(['remove', 'update-quantity', 'show-register', 'complete-order'])
 
 const showOrderModal = ref(false)
 const orderData = ref({
@@ -27,18 +27,19 @@ const handleOrder = () => {
 }
 
 const completeOrder = () => {
+  const order = {
+    id: Date.now(),
+    date: new Date().toLocaleDateString('ru-RU'),
+    items: props.cart.map(item => ({ ...item })),
+    total: total.value,
+    address: orderData.value.deliveryAddress,
+    deliveryDate: orderData.value.deliveryDate
+  }
+
+  emit('complete-order', order)
+
   showOrderModal.value = false
   orderData.value = { deliveryAddress: '', deliveryDate: '' }
-  alert(`Заказ успешно оформлен!
-
-Клиент: ${props.user.name}
-Email: ${props.user.email}
-Адрес доставки: ${orderData.value.deliveryAddress}
-Дата доставки: ${orderData.value.deliveryDate}
-
-Сумма: ${formatPrice(total.value)}
-
-Спасибо за покупку!`)
 }
 
 const formatPrice = (price) => {

@@ -7,13 +7,26 @@ import About from './components/About.vue'
 import Contact from './components/Contact.vue'
 import Cart from './components/Cart.vue'
 import Footer from './components/Footer.vue'
+import Profile from './components/Profile.vue'
 
 const currentPage = ref('home')
 const cart = ref([])
 const user = ref(null)
+const orders = ref([])
 const showRegisterModal = ref(false)
 const formData = ref({ name: '', email: '', phone: '' })
 const errors = ref({ name: '', email: '', phone: '' })
+
+
+const updateUser = (newUserData) => {
+  user.value = newUserData
+}
+
+const completeOrder = (order) => {
+  orders.value.push(order)
+  cart.value = []
+  currentPage.value = 'profile'
+}
 
 const cartCount = computed(() => cart.value.length)
 
@@ -117,13 +130,20 @@ const navigateTo = (page) => {
       <About v-if="currentPage === 'about'" />
       <Contact v-if="currentPage === 'contact'" />
       <Cart
-        v-if="currentPage === 'cart'"
-        :cart="cart"
-        :user="user"
-        @remove="removeFromCart"
-        @update-quantity="updateQuantity"
-        @show-register="showRegisterModal = true"
-      />
+  v-if="currentPage === 'cart'"
+  :cart="cart"
+  :user="user"
+  @remove="removeFromCart"
+  @update-quantity="updateQuantity"
+  @show-register="showRegisterModal = true"
+  @complete-order="completeOrder"
+/>
+      <Profile
+  v-if="currentPage === 'profile' && user"
+  :user="user"
+  :orders="orders"
+  @update-user="updateUser"
+/>
     </main>
 
     <Footer @navigate="navigateTo" />
