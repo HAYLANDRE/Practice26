@@ -1,9 +1,19 @@
 <template>
   <div class="card">
     <div class="card-image">
-      <img :src="watch.image" :alt="watch.title">
-      <div class="price-label">{{ formatPrice(watch.price) }}</div>
-    </div>
+  <img :src="watch.image" :alt="watch.title">
+
+  <div class="price-label">
+    {{ formatPrice(watch.price) }}
+  </div>
+
+  <button
+    class="favorite-btn"
+    @click="toggleFavorite"
+  >
+    {{ isFavorite ? '❤️' : '🤍' }}
+  </button>
+</div>
 
     <div class="card-info">
       <h3>{{ watch.title }}</h3>
@@ -17,11 +27,48 @@
 </template>
 
 <script setup>
-defineProps({
+import { ref, onMounted } from 'vue'
+
+const props = defineProps({
   watch: Object
 })
 
 defineEmits(['add-to-cart'])
+
+const isFavorite = ref(false)
+
+onMounted(() => {
+  const favorites =
+    JSON.parse(localStorage.getItem('favorites')) || []
+
+  isFavorite.value = favorites.some(
+    item => item.title === props.watch.title
+  )
+})
+
+const toggleFavorite = () => {
+  let favorites =
+    JSON.parse(localStorage.getItem('favorites')) || []
+
+  const exists = favorites.find(
+    item => item.title === props.watch.title
+  )
+
+  if (exists) {
+    favorites = favorites.filter(
+      item => item.title !== props.watch.title
+    )
+    isFavorite.value = false
+  } else {
+    favorites.push(props.watch)
+    isFavorite.value = true
+  }
+
+  localStorage.setItem(
+    'favorites',
+    JSON.stringify(favorites)
+  )
+}
 
 const formatPrice = (price) => {
   return new Intl.NumberFormat('ru-RU', {
@@ -120,5 +167,28 @@ const formatPrice = (price) => {
 
 .add-btn:active {
   transform: scale(0.98);
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  background: rgba(0,0,0,0.6);
+  font-size: 20px;
+
+  transition: 0.3s;
+}
+
+.favorite-btn:hover {
+  transform: scale(1.1);
 }
 </style>

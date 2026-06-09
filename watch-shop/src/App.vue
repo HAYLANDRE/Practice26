@@ -8,9 +8,33 @@ import Contact from './components/Contact.vue'
 import Cart from './components/Cart.vue'
 import Footer from './components/Footer.vue'
 import Profile from './components/Profile.vue'
+import Favorites from './components/Favorites.vue'
 
 const currentPage = ref('home')
 const cart = ref([])
+
+const favorites = ref(JSON.parse(localStorage.getItem('favorites') || '[]'))
+
+const saveFavorites = () => {
+  localStorage.setItem('favorites', JSON.stringify(favorites.value))
+}
+
+const toggleFavorite = (product) => {
+  const index = favorites.value.findIndex(item => item.id === product.id)
+
+  if (index !== -1) {
+    favorites.value.splice(index, 1)
+  } else {
+    favorites.value.push(product)
+  }
+
+  saveFavorites()
+}
+
+const isFavorite = (productId) => {
+  return favorites.value.some(item => item.id === productId)
+}
+
 const user = ref(null)
 const orders = ref([])
 const showRegisterModal = ref(false)
@@ -120,12 +144,18 @@ const navigateTo = (page) => {
       @show-register="showRegisterModal = true"
       @logout="logout"
     />
-
     <main class="main-content">
       <Home v-if="currentPage === 'home'" @navigate="navigateTo" />
       <Catalog
         v-if="currentPage === 'catalog'"
+        :favorites="favorites"
         @add-to-cart="addToCart"
+        @toggle-favorite="toggleFavorite"
+      />
+        <Favorites
+        v-if="currentPage === 'favorites'"
+        :favorites="favorites"
+        @toggle-favorite="toggleFavorite"
       />
       <About v-if="currentPage === 'about'" />
       <Contact v-if="currentPage === 'contact'" />
